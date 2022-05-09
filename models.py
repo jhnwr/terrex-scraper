@@ -167,3 +167,17 @@ class Model(BaseModel):
     # recommendationsEnabled: bool
     # product_link_list: List[ProductLinkListItem]
     # embellishment: Optional[Embellishment]
+
+
+class VariationListItem(BaseModel):
+    sku: str
+    size: str
+    availability: int
+    availability_status: str
+    instock_date: Optional[str] = None
+
+
+class Availability(BaseModel):
+    id: str
+    availability_status: str
+    variation_list: Optional[List[VariationListItem]]
