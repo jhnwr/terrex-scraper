@@ -103,7 +103,7 @@ class ProductDescription(BaseModel):
     title: str
     text: str
     subtitle: str
-    usps: List[str]
+    usps: Optional[List[str]]
     wash_care_instructions: WashCareInstructions
     # product_highlights: Optional[List[ProductHighlight]]
     description_assets: DescriptionAssets
@@ -163,7 +163,7 @@ class Model(BaseModel):
     # attribute_list: AttributeList
     # breadcrumb_list: List[BreadcrumbListItem]
     pricing_information: PricingInformation
-    # product_description: ProductDescription
+    product_description: Optional[ProductDescription]
     # recommendationsEnabled: bool
     # product_link_list: List[ProductLinkListItem]
     # embellishment: Optional[Embellishment]

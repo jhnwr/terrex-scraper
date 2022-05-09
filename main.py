@@ -1,9 +1,12 @@
+import json
+
 from requests_html import HTMLSession
 from models import Model
 import time
 
 
 def get_page_html(session, url):
+    # collect all the HTML we need until there are no more pages
     base_url = 'https://www.adidas.co.uk'
     all_html = []
     while True:
@@ -36,15 +39,20 @@ def load_json_model(json_data):
 
 
 def main():
+    results = []
     s = HTMLSession()
     url = 'https://www.adidas.co.uk/outdoor-men-hiking-shoes'
     html_list = get_page_html(s, url)
-    for html_data in html_list:
+    for html_idx, html_data in enumerate(html_list, start=1):
         codes = parse_product_codes(html_data)
-        for c in codes:
+        for idx, c in enumerate(codes, start=1):
             item = load_json_model(get_product_json(s, c))
-            print(item.json())
-            time.sleep(0.2)
+            results.append(item.dict())
+            print(f"gathered item {c} index {idx}/{len(codes)} from page {html_idx}")
+            time.sleep(0.1)
+
+    with open('results.json', 'w') as f:
+        json.dump(results, f)
 
 
 if __name__ == '__main__':
